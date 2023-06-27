@@ -1,0 +1,41 @@
+server:
+  port: 8484
+
+spring:
+  application:
+    name: ApiGateway
+
+  cloud:
+    gateway:
+      routes:
+        - id: ApiUsuarios
+          uri: lb://ApiUsuarios
+          predicates:
+            - Path=/usuario/**
+
+        - id: ApiCafeteria
+          uri: lb://ApiCafeteria
+          predicates:
+            - Path=/Cafeteria/**
+
+        - id: ApiCalificacion
+          uri: lb://ApiCalificacion
+          predicates:
+            - Path=/calificacion/**
+
+        - id: ApiAuth
+          uri: lb://ApiAuth
+          predicates:
+            - Path=/auth/*,/role/*
+            
+            
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://eurekaserver:8761/eureka
